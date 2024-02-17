@@ -52,5 +52,6 @@
 		grid-template-rows: repeat(4, 1fr);
 		height: 100%;
 		gap: 0.5em;
+		perspective: 100vw;
 	}
 </style>

@@ -6,8 +6,10 @@
 	export let found: boolean;
 </script>
 
-<div class="square" class:flipped={selected}>
+<div class="square" class:flipped={selected || found}>
 	<button on:click />
+
+	<div class="background" />
 
 	{#if !found}
 		<img alt={emoji} src={getTwemoji(emoji)} />
@@ -16,14 +18,15 @@
 
 <style>
 	.square {
-		background-color: yellow;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		transform-style: preserve-3d;
+		transition: transform 0.5s;
 	}
 
-	.flipped button {
-		background-color: red;
+	.flipped {
+		transform: rotateY(180deg);
 	}
 
 	button {
@@ -31,11 +34,29 @@
 		width: 100%;
 		height: 100%;
 		cursor: pointer;
+		backface-visibility: hidden;
+		background: #eee;
+		border: none;
+		border-radius: 1em;
+		font-size: inherit;
+	}
+
+	.background {
+		background-color: white;
+		border: 0.2em solid #eee;
+		position: absolute;
+		transform: rotateY(180deg);
+		backface-visibility: hidden;
+		width: 100%;
+		height: 100%;
+		border-radius: 1em;
 	}
 
 	img {
 		width: 6em;
 		height: 6em;
 		pointer-events: none;
+		transform: rotateY(180deg);
+		backface-visibility: hidden;
 	}
 </style>
