@@ -44,6 +44,7 @@
 		height: 1em;
 		background-color: transparent;
 		border: none;
+		cursor: pointer;
 	}
 
 	svg {

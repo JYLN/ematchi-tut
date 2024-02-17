@@ -19,6 +19,7 @@
 		size = level.size;
 		grid = createGrid(level);
 		remaining = duration = level.duration;
+		foundPairs = [];
 
 		resume();
 	}
@@ -60,6 +61,7 @@
 			if (remaining <= 0) {
 				dispatch('lose');
 				playing = false;
+				foundPairs = [];
 			}
 		}
 
@@ -89,6 +91,7 @@
 
 				if (foundPairs.length === (size * size) / 2) {
 					dispatch('win');
+					playing = false;
 				}
 			}}
 			{foundPairs}

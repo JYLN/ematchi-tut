@@ -58,6 +58,7 @@
 <style>
 	h1 {
 		font-size: 4em;
+		margin-bottom: 0.1em;
 	}
 
 	h1 span {
@@ -66,6 +67,23 @@
 
 	p {
 		font-family: Grandstander;
+	}
+
+	.button-container {
+		margin-top: 2em;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		gap: 1em;
+	}
+
+	.button-container button {
+		background-color: purple;
+		border: none;
+		padding: 1em 1.75em;
+		color: white;
+		border-radius: 1em;
+		cursor: pointer;
 	}
 
 	.confetti {

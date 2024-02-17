@@ -18,4 +18,8 @@
 		place-items: center;
 		z-index: 100;
 	}
+
+	.modal {
+		text-align: center;
+	}
 </style>
