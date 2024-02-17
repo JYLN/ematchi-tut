@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Found from './Found.svelte';
 	import Grid from './Grid.svelte';
 	import { levels, type Level } from './levels';
 	import { shuffle } from './utils';
@@ -39,7 +40,9 @@
 		/>
 	</div>
 
-	<div class="info"></div>
+	<div class="info">
+		<Found {foundPairs} />
+	</div>
 </div>
 
 <style>
