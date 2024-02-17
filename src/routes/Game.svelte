@@ -1,19 +1,34 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import Countdown from './Countdown.svelte';
 	import Found from './Found.svelte';
 	import Grid from './Grid.svelte';
-	import { levels, type Level } from './levels';
+	import { type Level } from './levels';
 	import { shuffle } from './utils';
 
-	const level = levels[0];
+	const dispatch = createEventDispatcher();
 
-	let size: number = level.size;
-	let grid: string[] = createGrid(level);
+	let size: number;
+	let grid: string[] = [];
 	let foundPairs: string[] = [];
-	let remaining: number = level.duration;
-	let duration: number = level.duration;
+	let remaining: number = 0;
+	let duration: number = 0;
 	let playing: boolean = false;
+
+	export function start(level: Level) {
+		size = level.size;
+		grid = createGrid(level);
+		remaining = duration = level.duration;
+
+		resume();
+	}
+
+	function resume() {
+		playing = true;
+		countdown();
+
+		dispatch('play');
+	}
 
 	function createGrid(level: Level) {
 		const copy = [...level.emojis];
@@ -36,33 +51,34 @@
 		let remainingAtStart = remaining;
 
 		function loop() {
-			if (playing) return;
+			if (!playing) return;
 
 			requestAnimationFrame(loop);
 
 			remaining = remainingAtStart - (Date.now() - start);
 
 			if (remaining <= 0) {
-				// TODO: game lost
+				dispatch('lose');
 				playing = false;
 			}
 		}
 
 		loop();
 	}
-
-	onMount(countdown);
 </script>
 
-<div class="game">
+<div class="game" style="--size: {size}">
 	<div class="info">
-		<Countdown
-			{remaining}
-			duration={level.duration}
-			on:click={() => {
-				// pause the game
-			}}
-		/>
+		{#if playing}
+			<Countdown
+				{remaining}
+				{duration}
+				on:click={() => {
+					dispatch('pause');
+					playing = false;
+				}}
+			/>
+		{/if}
 	</div>
 
 	<div class="grid-container">
@@ -72,7 +88,7 @@
 				foundPairs = [...foundPairs, e.detail.emoji];
 
 				if (foundPairs.length === (size * size) / 2) {
-					// win the game
+					dispatch('win');
 				}
 			}}
 			{foundPairs}
