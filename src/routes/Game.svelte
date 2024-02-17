@@ -29,7 +29,13 @@
 	<div class="info"></div>
 
 	<div class="grid-container">
-		<Grid {grid} />
+		<Grid
+			{grid}
+			on:found={(e) => {
+				foundPairs = [...foundPairs, e.detail.emoji];
+			}}
+			{foundPairs}
+		/>
 	</div>
 
 	<div class="info"></div>
