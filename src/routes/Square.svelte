@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { getTwemoji } from './utils';
+
 	export let emoji: string;
 	export let selected: boolean;
 	export let found: boolean;
@@ -8,7 +10,7 @@
 	<button on:click />
 
 	{#if !found}
-		<span>{emoji}</span>
+		<img alt={emoji} src={getTwemoji(emoji)} />
 	{/if}
 </div>
 
@@ -31,8 +33,9 @@
 		cursor: pointer;
 	}
 
-	span {
-		font-size: 5em;
+	img {
+		width: 6em;
+		height: 6em;
 		pointer-events: none;
 	}
 </style>
